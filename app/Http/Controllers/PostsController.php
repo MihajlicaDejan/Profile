@@ -36,8 +36,6 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-
-
         $this->validate($request,[
             'title'         => 'required',
             'featured'      => 'required|image',
@@ -57,14 +55,10 @@ class PostsController extends Controller
             'category_id' => $request->category_id,
             'slug' => str_slug($request->title),
             'user_id' => Auth::id()
-
-
         ));
-
         $post->tags()->attach($request->tags);
 
         Session::flash('success', 'Post created succesfully');
-
         return redirect()->route('posts');
     }
 
@@ -76,7 +70,6 @@ class PostsController extends Controller
         $tags = Tag::all();
 
         return view('admin.posts.edit', compact('post', 'categories', 'tags'));
-
     }
 
 
@@ -105,15 +98,10 @@ class PostsController extends Controller
         $post->category_id = $request->category_id;
 
         $post->save();
-
         $post->tags()->sync($request->tags);
 
         Session::flash('success', 'Post uploaded successfully!');
-
         return redirect()->route('posts');
-
-
-
     }
 
 
@@ -123,7 +111,6 @@ class PostsController extends Controller
         $post->delete();
 
         Session::flash('success', 'The post was just trashed');
-
         return redirect()->back();
     }
 
@@ -141,7 +128,6 @@ class PostsController extends Controller
         $posts->forceDelete();
 
         Session::flash('success', 'Post is DELETED');
-
         return redirect()->back();
     }
 
@@ -152,7 +138,6 @@ class PostsController extends Controller
         $posts->restore();
 
         Session::flash('success', 'Post is Restored');
-
         return redirect()->route('posts');
     }
 }
